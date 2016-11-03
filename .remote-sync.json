@@ -1,0 +1,16 @@
+{
+  "uploadOnSave": true,
+  "useAtomicWrites": false,
+  "deleteLocal": false,
+  "hostname": "45.55.184.33",
+  "port": "22",
+  "target": "/home/fabiantjoeaon/laravel",
+  "ignore": [
+    ".remote-sync.json",
+    ".git/**"
+  ],
+  "username": "root",
+  "password": "0104ingwer",
+  "watch": [],
+  "transport": "scp"
+}
