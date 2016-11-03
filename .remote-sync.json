@@ -4,7 +4,7 @@
   "deleteLocal": false,
   "hostname": "45.55.184.33",
   "port": "22",
-  "target": "/home/fabiantjoeaon/laravel",
+  "target": "/var/www/laravel",
   "ignore": [
     ".remote-sync.json",
     ".git/**"
