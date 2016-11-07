@@ -20,9 +20,12 @@ class CreateReservationsTable extends Migration
           $table->string('activity', 75);
           $table->string('status', 45);
           $table->integer('number_persons');
-          $table->foreign('room_id')->references('id')->on('rooms');
-          $table->foreign('user_id')->references('id')->on('users');
-          $table->foreign('customer_id')->references('id')->on('customers');
+          $table->integer('room_id')->unsigned();
+          $table->foreign('room_id')->references('id')->on('rooms')->onDelete('cascade');
+          $table->integer('user_id')->unsigned();
+          $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+          $table->integer('customer_id')->unsigned();
+          $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
           $table->timestamps();
         });
     }
