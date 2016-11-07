@@ -13,6 +13,9 @@ class Customer extends Model
       return $this->belongsTo('App\User');
     }
 
+    /**
+     *  Retrieve reservations for customer
+     */
     public function reservations() {
       return $this->hasMany('App\Reservation');
     }
