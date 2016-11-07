@@ -7,7 +7,7 @@ use Illuminate\Http\Response;
 use App\Room;
 use App\Transformers\RoomTransformer;
 
-class RoomsController extends Controller
+class RoomsController extends ApiController
 {
     /**
      * @var App\Transformers\RoomTransformer
@@ -26,9 +26,10 @@ class RoomsController extends Controller
     public function index()
     {
         $rooms = Room::all();
-        return response()->json([
+
+        return $this->respond([
           'data' => $this->roomTransformer->transformCollection($rooms->toArray())
-        ], 200);
+        ]);
     }
 
     /**
@@ -62,18 +63,13 @@ class RoomsController extends Controller
     {
         $room = Room::find($id);
 
-        if(empty($room)) {
-          return response()->json([
-            'error' => [
-              'message' => 'No rooms found for this ID',
-              'status-code' => '404'
-            ]
-          ], 404);
-        } else {
-          return response()->json([
-            'data' => $this->roomTransformer->transform($room)
-          ], 200);
+        if(!$room) {
+          return $this->respondNotFound('Room does not exist!');
         }
+
+        return $this->respond([
+          'data' => $this->roomTransformer->transform($room)
+        ]);
     }
 
     /**
