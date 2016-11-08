@@ -17,12 +17,6 @@ Route::get('/', function() {
 });
 
 /* API Version 1 */
-Route::group(['prefix' => 'v1'], function() {
-  // Route::get('/', function (Request $request) {
-    // $user = App\User::find(19);
-    // $data = $user->reservations()->get();
-    // return Response::json($data);
-  // });
-
+Route::group(['prefix' => 'v1', 'middleware' => 'auth.basic'], function() {
   Route::resource('rooms', 'RoomsController');
 });

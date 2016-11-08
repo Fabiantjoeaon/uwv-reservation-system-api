@@ -3,6 +3,11 @@
 namespace App\Transformers;
 
 class RoomTransformer extends Transformer {
+  /**
+   * Transformer for rooms
+   * @param $room Room to be transformed
+   * @return array  Transformed rooms
+   */
   public function transform($room) {
     return [
       'name' => $room['location'].'.'.$room['floor'].'.'.$room['number'],

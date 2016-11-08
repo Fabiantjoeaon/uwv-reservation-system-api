@@ -16,6 +16,8 @@ class RoomsController extends ApiController
 
     function __construct(RoomTransformer $roomTransformer) {
       $this->roomTransformer = $roomTransformer;
+
+      //$this->middleWare('auth.basic');
     }
 
     /**
