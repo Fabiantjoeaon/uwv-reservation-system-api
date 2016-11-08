@@ -29,7 +29,7 @@ class ReservationsController extends ApiController
       $reservations = Room::findOrFail($roomId)->reservations();
 
       if(!count($reservations)) {
-        return $this->respondNotFound('Reservation for this room does not exist!');
+        return $this->respondNotFound('There are no reservations for this room!');
       }
 
       return $this->respond([
@@ -41,7 +41,7 @@ class ReservationsController extends ApiController
         $reservations = User::findOrFail($userId)->reservations();
 
         if(!count($reservations)) {
-          return $this->respondNotFound('Reservation for this room does not exist!');
+          return $this->respondNotFound('There are no reservations for this user!');
         }
 
         return $this->respond([
