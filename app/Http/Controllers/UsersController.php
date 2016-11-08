@@ -3,10 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\User;
 
 class UsersController extends ApiController
 {
+    public function getAuthenticatedUser() {
+      $user = User::findOrFail(Auth::id());
+
+      return $this->respond([
+        'data' => $user
+      ]);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,8 +22,13 @@ class UsersController extends ApiController
      */
     public function index()
     {
-        //
+        $users = User::all();
+
+        return $this->respond([
+          'data' => $users
+        ]);
     }
+
 
     /**
      * Show the form for creating a new resource.

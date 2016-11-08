@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Room;
+use App\Reservation;
 use App\Transformers\RoomTransformer;
 
 class RoomsController extends ApiController
@@ -26,7 +27,7 @@ class RoomsController extends ApiController
     public function index()
     {
         $rooms = Room::all();
-        
+
         return $this->respond([
           'data' => $this->roomTransformer->transformCollection($rooms->toArray())
         ]);
