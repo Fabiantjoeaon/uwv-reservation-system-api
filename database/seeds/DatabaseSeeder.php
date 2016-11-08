@@ -47,7 +47,7 @@ class UsersTableSeeder extends Seeder
             'last_name' => $faker->lastName,
             'email' => $faker->email,
             'password' => bcrypt('secret'),
-            'created_at' => $faker->dateTime($max = 'now')
+            'created_at' => $faker->dateTimeThisMonth($max = 'now')
           ]);
         }
     }
@@ -78,7 +78,7 @@ class RoomsTableSeeder extends Seeder
              'color' => $faker->colorName,
              'type' => $this->returnRandomRoomType(rand(0,1)),
              'has_pc' => $faker->boolean(25),
-             'created_at' => $faker->dateTime($max = 'now')
+             'created_at' => $faker->dateTimeThisMonth($max = 'now')
            ]);
          }
      }
@@ -102,7 +102,7 @@ class CustomersTableSeeder extends Seeder
               'first_name' => $faker->firstName,
               'last_name' => $faker->lastName,
               'user_id' => $faker->randomElement($users),
-              'created_at' => $faker->dateTime($max = 'now')
+              'created_at' => $faker->dateTimeThisMonth($max = 'now')
             ]);
           }
       }
@@ -138,7 +138,7 @@ class ReservationsTableSeeder extends Seeder
              'room_id' => $faker->randomElement($rooms),
              'user_id' => $faker->randomElement($users),
              'customer_id' => $faker->randomElement($customers),
-             'created_at' => $faker->dateTime($max = 'now')
+             'created_at' => $faker->dateTimeThisMonth($max = 'now')
            ]);
          }
      }
