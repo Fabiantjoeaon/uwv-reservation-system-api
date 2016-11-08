@@ -77,8 +77,7 @@ class ReservationsController extends ApiController
      */
     public function show($id)
     {
-        $reservation = Room::find($id);
-
+        $reservation = Reservation::find($id);
         if(!$reservation) {
           return $this->respondNotFound('Reservation does not exist!');
         }
