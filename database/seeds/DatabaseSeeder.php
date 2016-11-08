@@ -13,10 +13,16 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0');
+        DB::table('users')->truncate();
+        DB::table('rooms')->truncate();
+        DB::table('customers')->truncate();
+        DB::table('reservations')->truncate();
         $this->call(UsersTableSeeder::class);
         $this->call(RoomsTableSeeder::class);
         $this->call(CustomersTableSeeder::class);
         $this->call(ReservationsTableSeeder::class);
+        DB::statement('SET FOREIGN_KEY_CHECKS=1');
     }
 }
 
@@ -29,10 +35,9 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('users')->delete();
         $faker = Faker\Factory::create();
 
-        for($i = 0; $i < 20; $i++) {
+        foreach(range(0,20) as $index) {
           DB::table('users')->insert([
             'first_name' => $faker->firstName,
             'last_name' => $faker->lastName,
@@ -58,10 +63,9 @@ class RoomsTableSeeder extends Seeder
      */
      public function run()
      {
-         DB::table('rooms')->delete();
          $faker = Faker\Factory::create();
 
-         for($i = 0; $i < 20; $i++) {
+         foreach(range(0,20) as $index) {
            DB::table('rooms')->insert([
              'location' => $faker->city,
              'floor' => rand(0,1),
@@ -85,10 +89,9 @@ class CustomersTableSeeder extends Seeder
      */
       public function run()
       {
-          DB::table('customers')->delete();
           $faker = Faker\Factory::create();
 
-          for($i = 0; $i < 20; $i++) {
+          foreach(range(0,20) as $index) {
             DB::table('customers')->insert([
               'BSN' => rand(1, 600),
               'first_name' => $faker->firstName,
@@ -115,10 +118,9 @@ class ReservationsTableSeeder extends Seeder
      */
      public function run()
      {
-         DB::table('reservations')->delete();
          $faker = Faker\Factory::create();
 
-         for($i = 0; $i < 10; $i++) {
+         foreach(range(0,10) as $index) {
            DB::table('reservations')->insert([
              'date_time' => $faker->dateTime($max = 'now'),
              'length_minutes' => rand(1,180),
