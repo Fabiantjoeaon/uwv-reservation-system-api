@@ -11,21 +11,39 @@ use App\Customer;
 class DatabaseSeeder extends Seeder
 {
     /**
+     * Tables to be seeded
+     * @var string
+     */
+    private $tables = [
+      'users',
+      'rooms',
+      'customers',
+      'reservations'
+    ];
+
+    /**
      * Run the database seeds.
-     *
      * @return void
      */
     public function run()
     {
-        DB::statement('SET FOREIGN_KEY_CHECKS=0');
-        DB::table('users')->truncate();
-        DB::table('rooms')->truncate();
-        DB::table('customers')->truncate();
-        DB::table('reservations')->truncate();
+        $this->cleanDatabase();
+        Eloquent::unguard();
         $this->call(UsersTableSeeder::class);
         $this->call(RoomsTableSeeder::class);
         $this->call(CustomersTableSeeder::class);
         $this->call(ReservationsTableSeeder::class);
+    }
+
+    /**
+     * Empty database according to set tables
+     * @return void
+     */
+    private function cleanDatabase() {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0');
+        foreach($this->tables as $tableName) {
+          DB::table($tableName)->truncate();
+        }
         DB::statement('SET FOREIGN_KEY_CHECKS=1');
     }
 }
@@ -130,7 +148,7 @@ class ReservationsTableSeeder extends Seeder
 
          foreach(range(0,10) as $index) {
            DB::table('reservations')->insert([
-             'date_time' => $faker->dateTime($max = 'now'),
+             'date_time' => $faker->dateTimeThisMonth($max = 'now'),
              'length_minutes' => rand(1,180),
              'activity' => str_random(10),
              'status' => $this->returnRandomStatusType(rand(0,1)),
