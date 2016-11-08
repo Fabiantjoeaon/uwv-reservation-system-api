@@ -4,6 +4,10 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 
+use App\User;
+use App\Room;
+use App\Customer;
+
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -51,7 +55,7 @@ class UsersTableSeeder extends Seeder
 
 class RoomsTableSeeder extends Seeder
 {
-    static function returnRandomRoomType($number) {
+    private function returnRandomRoomType($number) {
       $rooms = ['Spreekkamer', 'Onderzoekkamer'];
       return $rooms[$number];
     }
@@ -72,7 +76,7 @@ class RoomsTableSeeder extends Seeder
              'number' => rand(1,50),
              'capacity' => rand(1, 5),
              'color' => $faker->colorName,
-             'type' => self::returnRandomRoomType(rand(0,1)),
+             'type' => $this->returnRandomRoomType(rand(0,1)),
              'has_pc' => $faker->boolean(25),
              'created_at' => $faker->dateTime($max = 'now')
            ]);
@@ -90,13 +94,14 @@ class CustomersTableSeeder extends Seeder
       public function run()
       {
           $faker = Faker\Factory::create();
+          $users = User::pluck('id')->all();
 
           foreach(range(0,20) as $index) {
             DB::table('customers')->insert([
               'BSN' => rand(1, 600),
               'first_name' => $faker->firstName,
               'last_name' => $faker->lastName,
-              'user_id' => rand(1,20),
+              'user_id' => $faker->randomElement($users),
               'created_at' => $faker->dateTime($max = 'now')
             ]);
           }
@@ -107,7 +112,7 @@ class CustomersTableSeeder extends Seeder
 
 class ReservationsTableSeeder extends Seeder
 {
-    static function returnRandomStatusType($number) {
+    private function returnRandomStatusType($number) {
       $status = ['Aanvaard', 'Bezig'];
       return $status[$number];
     }
@@ -119,17 +124,20 @@ class ReservationsTableSeeder extends Seeder
      public function run()
      {
          $faker = Faker\Factory::create();
+         $rooms = Room::pluck('id')->all();
+         $users = User::pluck('id')->all();
+         $customers = Customer::pluck('id')->all();
 
          foreach(range(0,10) as $index) {
            DB::table('reservations')->insert([
              'date_time' => $faker->dateTime($max = 'now'),
              'length_minutes' => rand(1,180),
              'activity' => str_random(10),
-             'status' => self::returnRandomStatusType(rand(0,1)),
+             'status' => $this->returnRandomStatusType(rand(0,1)),
              'number_persons' => rand(1,7),
-             'room_id' => rand(1,20),
-             'user_id' => rand(1,20),
-             'customer_id' => rand(1,20),
+             'room_id' => $faker->randomElement($rooms),
+             'user_id' => $faker->randomElement($users),
+             'customer_id' => $faker->randomElement($customers),
              'created_at' => $faker->dateTime($max = 'now')
            ]);
          }
