@@ -150,7 +150,7 @@ class ReservationsTableSeeder extends Seeder
            DB::table('reservations')->insert([
              'date_time' => $faker->dateTimeThisMonth($max = 'now'),
              'length_minutes' => rand(1,180),
-             'activity' => str_random(10),
+             'activity' => $faker->sentence($nbWords = 3, $variableNbWords = true),
              'status' => $this->returnRandomStatusType(rand(0,1)),
              'number_persons' => rand(1,7),
              'room_id' => $faker->randomElement($rooms),

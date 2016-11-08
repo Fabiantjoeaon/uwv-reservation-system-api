@@ -31,13 +31,13 @@ class User extends Authenticatable
      *  Retrieve customers for user
      */
     public function customers() {
-      return $this->hasMany('App\Customer');
+      return $this->hasMany('App\Customer')->getResults();
     }
 
     /**
      *  Retrieve reservations for user
      */
     public function reservations() {
-      return $this->hasMany('App\Reservation');
+      return $this->hasMany('App\Reservation')->getResults();
     }
 }

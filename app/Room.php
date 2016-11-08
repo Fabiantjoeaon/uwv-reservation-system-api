@@ -10,6 +10,6 @@ class Room extends Model
     *  Retrieve reservations for room
     */
     public function reservations() {
-      return $this->hasMany('App\Reservation');
+      return $this->hasMany('App\Reservation')->getResults();
     }
 }
