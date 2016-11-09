@@ -37,6 +37,11 @@ class ReservationsController extends ApiController
       ]);
     }
 
+    /**
+     * Get reservations by userId
+     * @param  integer $userId of the user resource
+     * @return Object of App\User
+     */
     public function getReservationsByUser($userId) {
         $reservations = User::findOrFail($userId)->reservations();
 

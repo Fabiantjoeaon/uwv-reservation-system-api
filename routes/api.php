@@ -17,7 +17,7 @@ Route::get('/', function() {
 });
 
 /* API Version 1 */
-Route::group(['prefix' => 'v1', 'middleware' => 'auth.basic'], function() {
+Route::group(['prefix' => 'v1', 'middleware' => ['cors', 'auth.basic']], function() {
   Route::resource('users', 'UsersController', ['only' => ['index', 'show']]);
   Route::resource('rooms', 'RoomsController', ['only' => ['index', 'show']]);
   Route::resource('reservations', 'ReservationsController');
