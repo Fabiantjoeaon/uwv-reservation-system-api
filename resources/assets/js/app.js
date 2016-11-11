@@ -31,5 +31,5 @@ Vue.component(
 );
 
 const app = new Vue({
-    el: 'body'
+    el: '#app'
 });
