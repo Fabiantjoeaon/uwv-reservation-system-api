@@ -17,10 +17,11 @@ Route::get('/', function() {
 });
 
 /* API Version 1 */
-Route::group(['prefix' => 'v1', 'middleware' => ['cors', 'auth.basic']], function() {
+Route::group(['prefix' => 'v1', 'middleware' => ['cors', 'auth:api']], function() {
   Route::resource('users', 'UsersController', ['only' => ['index', 'show']]);
   Route::resource('rooms', 'RoomsController', ['only' => ['index', 'show']]);
   Route::resource('reservations', 'ReservationsController');
+  Route::resource('customers', 'CustomersController');
   //TODO: Customerscontroller as resource
 
   Route::get('rooms/{id}/reservations', 'ReservationsController@getReservationsByRoom');

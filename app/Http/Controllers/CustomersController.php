@@ -19,7 +19,7 @@ class CustomersController extends ApiController
         $this->customerTransformer = $customerTransformer;
     }
 
-    function getCustomersByUser($userId) {
+    public function getCustomersByUser($userId) {
       $customers = User::findOrFail($userId)->customers();
 
       if(!count($customers)) {
@@ -31,7 +31,7 @@ class CustomersController extends ApiController
       ]);
     }
 
-    function getCustomerByReservation($reservationId) {
+    public function getCustomerByReservation($reservationId) {
       $customer = Reservation::findOrFail($reservationId)->customer();
 
       if(!count($customer)) {
@@ -50,7 +50,11 @@ class CustomersController extends ApiController
      */
     public function index()
     {
-        //
+        $customers = Customer::all();
+
+        return $this->respond([
+          'data' => $this->customerTransformer->transformCollection($customers->toArray())
+        ]);
     }
 
     /**
@@ -82,7 +86,15 @@ class CustomersController extends ApiController
      */
     public function show($id)
     {
-        //
+        $customers = Customer::findOrFail($id);
+
+        if(!count($customers)) {
+          return $this->respondNotFound('Customers does not exist!');
+        }
+
+        $this->respond([
+          'data' => $customer->customerTransformer->transform($customer)
+        ]);
     }
 
     /**

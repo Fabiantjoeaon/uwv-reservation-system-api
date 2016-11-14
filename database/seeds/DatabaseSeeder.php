@@ -61,8 +61,7 @@ class UsersTableSeeder extends Seeder
 
         foreach(range(0,20) as $index) {
           DB::table('users')->insert([
-            // 'first_name' => $faker->firstName,
-            // 'last_name' => $faker->lastName,
+            'name' => $faker->name,
             'email' => $faker->email,
             'password' => bcrypt('secret'),
             'created_at' => $faker->dateTimeThisMonth($max = 'now')
