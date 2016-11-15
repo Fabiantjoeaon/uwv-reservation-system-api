@@ -17,7 +17,7 @@ Route::get('/', function() {
 });
 
 /* API Version 1 */
-Route::group(['prefix' => 'v1', 'middleware' => ['cors', 'auth:api']], function() {
+Route::group(['prefix' => 'v1', 'middleware' => ['cors', 'auth.basic']], function() {
   Route::resource('users', 'UsersController', ['only' => ['index', 'show']]);
   Route::resource('rooms', 'RoomsController', ['only' => ['index', 'show']]);
   Route::resource('reservations', 'ReservationsController');
@@ -31,5 +31,5 @@ Route::group(['prefix' => 'v1', 'middleware' => ['cors', 'auth:api']], function(
 
   Route::get('me', 'UsersController@getAuthenticatedUser');
   Route::get('me/reservations', 'ReservationsController@getReservationsByAuthenticatedUser');
-  //TODO: me/customers
+  Route::get('me/customers', 'CustomersController@getCustomersByAuthenticatedUser');
 });

@@ -31,6 +31,28 @@ class CustomersController extends ApiController
       ]);
     }
 
+    /**
+     * [getCustomersByAuthenticatedUser description]
+     * @return [type] [description]
+     */
+    public function getCustomersByAuthenticatedUser() {
+      $userId = Auth::id();
+      $customers = User::findOrFail($userId)->customers();
+
+      if(!count($reservations)) {
+        return $this->respondNotFound('You have no customers!');
+      }
+
+      return $this->respond([
+        'data' => $this->customersTransformer->transformCollection($customers->toArray())
+      ]);
+    }
+
+    /**
+     * Retrieve customers by reservation
+     * @param  [integer] $reservationId
+     * @return response
+     */
     public function getCustomerByReservation($reservationId) {
       $customer = Reservation::findOrFail($reservationId)->customer();
 
