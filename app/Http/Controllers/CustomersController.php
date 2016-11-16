@@ -7,6 +7,7 @@ use App\Customer;
 use App\User;
 use App\Reservation;
 use App\Transformers\CustomerTransformer;
+use Illuminate\Support\Facades\Auth;
 
 class CustomersController extends ApiController
 {
@@ -19,6 +20,11 @@ class CustomersController extends ApiController
         $this->customerTransformer = $customerTransformer;
     }
 
+    /**
+     * Retrieve customers by user
+     * @param  [type] $userId [description]
+     * @return [type]         [description]
+     */
     public function getCustomersByUser($userId) {
       $customers = User::findOrFail($userId)->customers();
 
@@ -39,12 +45,12 @@ class CustomersController extends ApiController
       $userId = Auth::id();
       $customers = User::findOrFail($userId)->customers();
 
-      if(!count($reservations)) {
+      if(!count($customers)) {
         return $this->respondNotFound('You have no customers!');
       }
 
       return $this->respond([
-        'data' => $this->customersTransformer->transformCollection($customers->toArray())
+        'data' => $this->customerTransformer->transformCollection($customers->toArray())
       ]);
     }
 

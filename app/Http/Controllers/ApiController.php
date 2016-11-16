@@ -61,6 +61,10 @@ class ApiController extends Controller {
     return $this->setStatusCode(404)->respondWithError($message);
   }
 
+  public function respondUnauthorized($message = 'Invalid credentials!') {
+    return $this->setStatusCode(401)->respondWithError($message);
+  }
+
   /**
    * Response for internal server error
    * @param  string $message Message to be passed on to call
