@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Tymon\JWTAuth\Middleware\GetUserFromToken;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,7 +22,7 @@ Route::group(['prefix' => 'v1', 'middleware' => 'cors'], function() {
 
   Route::post('/login', 'AuthController@authenticate');
 
-  Route::group(['middleware' => 'auth.basic'], function() {
+  Route::group(['middleware' => ['jwt.auth', 'jwt.refresh']], function() {
     Route::resource('users', 'UsersController', ['only' => ['index', 'show', 'store']]);
     Route::resource('rooms', 'RoomsController', ['only' => ['index', 'show']]);
     Route::resource('reservations', 'ReservationsController');

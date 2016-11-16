@@ -8,6 +8,7 @@ use App\User;
 
 class UsersController extends ApiController
 {
+    //https://github.com/tymondesigns/jwt-auth/wiki/Authentication
     public function getAuthenticatedUser() {
       $user = User::findOrFail(Auth::id());
 
