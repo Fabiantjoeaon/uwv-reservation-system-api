@@ -7,6 +7,7 @@ use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Illuminate\Http\Response as IlluminateResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Http\Request;
 
 class AuthController extends ApiController {
@@ -17,6 +18,9 @@ class AuthController extends ApiController {
    */
   public function authenticate(Request $request) {
     $credentials = $request->only('email', 'password');
+    $data = $request->all();
+    dd($request->all());
+    $user = User::where('email', Input::get('email'))->first();
 
     try {
       if (!$token = JWTAuth::attempt($credentials)) {
@@ -25,8 +29,10 @@ class AuthController extends ApiController {
     } catch (JWTException $e) {
         return $this->respondInternalError('Could not create token!');
     }
-
-    return $this->respond(compact('token'));
+    // dd()
+    return $this->respond([
+      'token' => compact('token'),
+      'user' => $user]);
   }
 
   /**

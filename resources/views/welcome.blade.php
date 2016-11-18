@@ -13,10 +13,10 @@
         <!-- Styles -->
         <style>
             html, body {
-                background-color: #fff;
-                color: #636b6f;
+                background-color: rgb(157, 88, 88);
+                color: rgb(226, 162, 162);
                 font-family: 'Raleway', sans-serif;
-                font-weight: 100;
+                font-weight: 900;
                 height: 100vh;
                 margin: 0;
             }
@@ -50,7 +50,7 @@
             }
 
             .links > a {
-                color: #636b6f;
+                /*color: #636b6f;*/
                 padding: 0 25px;
                 font-size: 12px;
                 font-weight: 600;
@@ -59,6 +59,9 @@
                 text-transform: uppercase;
             }
 
+            .links > a:visited {
+              color: rgb(226, 162, 162);
+            }
             .m-b-md {
                 margin-bottom: 30px;
             }
@@ -66,27 +69,23 @@
     </head>
     <body>
         <div class="flex-center position-ref full-height">
-          <div class="top-right links">
-            @if (Auth::check())
-              <a href="{{ url('/home') }}">Dashboard</a>
-              <a href="{{ url('/logout') }}">Logout</a>
-            @else
-              <a href="{{ url('/login') }}">Login</a>
-              <a href="{{ url('/register') }}">Register</a>
-            @endif
-          </div>
+          <!-- <div class="top-right links"> -->
+            <!-- @if (Auth::check()) -->
+              <!-- <a href="{{ url('/home') }}">Dashboard</a> -->
+              <!-- <a href="{{ url('/logout') }}">Logout</a> -->
+            <!-- @else -->
+              <!-- <a href="{{ url('/login') }}">Login</a> -->
+              <!-- <a href="{{ url('/register') }}">Register</a> -->
+            <!-- @endif -->
+          <!-- </div> -->
 
             <div class="content">
                 <div class="title m-b-md">
-                    Laravel
+                    Dorsia API
                 </div>
 
                 <div class="links">
-                    <a href="https://laravel.com/docs">Documentation</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
+                    <a href="https://github.com/Fabiantjoeaon">GitHub</a>
                 </div>
             </div>
         </div>

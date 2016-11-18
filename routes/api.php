@@ -14,15 +14,19 @@ use Tymon\JWTAuth\Middleware\GetUserFromToken;
 |
 */
 Route::get('/', function() {
-  return 'Welcome to API';
+  return view('welcome');
 });
 
 /* API Version 1 */
 Route::group(['prefix' => 'v1', 'middleware' => 'cors'], function() {
 
+  Route::get('/', function() {
+    return view('welcome');
+  });
+
   Route::post('/login', 'AuthController@authenticate');
 
-  Route::group(['middleware' => ['jwt.auth', 'jwt.refresh']], function() {
+  Route::group(['middleware' => ['jwt.auth', 'https']], function() {
     Route::resource('users', 'UsersController', ['only' => ['index', 'show', 'store']]);
     Route::resource('rooms', 'RoomsController', ['only' => ['index', 'show']]);
     Route::resource('reservations', 'ReservationsController');
