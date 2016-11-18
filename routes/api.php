@@ -18,7 +18,7 @@ Route::get('/', function() {
 });
 
 /* API Version 1 */
-Route::group(['prefix' => 'v1', 'middleware' => 'cors'], function() {
+Route::group(['prefix' => 'v1', 'middleware' => ['cors', 'https']], function() {
 
   Route::get('/', function() {
     return view('welcome');
@@ -26,7 +26,7 @@ Route::group(['prefix' => 'v1', 'middleware' => 'cors'], function() {
 
   Route::post('/login', 'AuthController@authenticate');
 
-  Route::group(['middleware' => ['jwt.auth', 'https']], function() {
+  Route::group(['middleware' => ['before' => 'jwt.auth', 'after' => 'jwt.refresh']], function() {
     Route::resource('users', 'UsersController', ['only' => ['index', 'show', 'store']]);
     Route::resource('rooms', 'RoomsController', ['only' => ['index', 'show']]);
     Route::resource('reservations', 'ReservationsController');
