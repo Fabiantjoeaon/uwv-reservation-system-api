@@ -20,13 +20,19 @@ Route::get('/', function() {
 /* API Version 1 */
 Route::group(['prefix' => 'v1', 'middleware' => ['cors', 'https']], function() {
 
+  Route::get('/test', function () {
+    $token = JWTAuth::parseToken();
+
+    return JWTAuth::parseToken()->authenticate();
+  });
+
   Route::get('/', function() {
     return view('welcome');
   });
 
   Route::post('/login', 'AuthController@authenticate');
 
-  Route::group(['middleware' => ['before' => 'jwt.auth', 'after' => 'jwt.refresh']], function() {
+  Route::group(['middleware' => ['before'=>'jwt.auth','after'=>'jwt.refresh']], function() {
     Route::resource('users', 'UsersController', ['only' => ['index', 'show', 'store']]);
     Route::resource('rooms', 'RoomsController', ['only' => ['index', 'show']]);
     Route::resource('reservations', 'ReservationsController');

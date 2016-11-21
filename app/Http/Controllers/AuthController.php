@@ -18,6 +18,7 @@ class AuthController extends ApiController {
    */
   public function authenticate(Request $request) {
     $credentials = $request->only('email', 'password');
+
     $user = User::where('email', Input::get('email'))->first();
 
     try {
