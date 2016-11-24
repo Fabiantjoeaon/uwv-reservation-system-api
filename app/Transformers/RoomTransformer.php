@@ -19,7 +19,8 @@ class RoomTransformer extends Transformer {
       'type' => $room['type'],
       'invalid' => (boolean) $room['invalid'],
       'has_pc' => (boolean) $room['has_pc'],
-      'is_reserved' => (boolean) $room['is_reserved'],
+      'is_reserved_now' => (boolean) $room['is_reserved_now'],
+      // 'is_reserved_today' => (boolean) $room['is_reserved_today'],
     ];
   }
 }

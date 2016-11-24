@@ -78,10 +78,10 @@ class UpdateRoomForReservation extends Command
         // Check if reservation is now
         if($this->checkIfDateIsInRange($reservation->start_date_time, $reservation->end_date_time, $now)) {
           error_log("${res} is now at ${rom}");
-          if($room->is_reserved) {
+          if($room->is_reserved_now) {
             continue;
           } else {
-            $room->is_reserved = true;
+            $room->is_reserved_now = true;
             $room->save();
 
             //TODO: Re-render client
@@ -91,7 +91,7 @@ class UpdateRoomForReservation extends Command
         // Reservation has already passed...
         elseif ($this->checkIfDateHasPassed($reservation->end_date_time, $now)) {
           error_log("${res} has passed");
-          $room->is_reserved = false;
+          $room->is_reserved_now = false;
           $room->save();
           // Flag reservation to passed, delete with other cron job
           $reservation->delete();
@@ -99,7 +99,7 @@ class UpdateRoomForReservation extends Command
 
         // Reservation is in the future
         else {
-          // Do nothing
+          //TODO: Set DB record if reservation is this day
           error_log("${res} has yet to come");
         }
       }

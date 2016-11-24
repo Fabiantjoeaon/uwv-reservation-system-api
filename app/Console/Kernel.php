@@ -25,10 +25,9 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('inspire')
-                 ->everyMinute();
-
-        $schedule->exec('touch test.php')->everyMinute();
+        $schedule->command('dorsia:updaterooms')
+                 ->everyMinute()
+                 ->appendOutputTo(storage_path('logs/room_output.log'));    
     }
 
     /**

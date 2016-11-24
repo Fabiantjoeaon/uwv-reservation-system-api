@@ -100,7 +100,8 @@ class RoomsTableSeeder extends Seeder
              'color' => $this->returnRandomColor(rand(0, 2)),
              'type' => $this->returnRandomRoomType(rand(0,1)),
              'invalid' => $faker->boolean(25),
-             'is_reserved' => 0,
+             'is_reserved_now' => 0,
+            //  'is_reserved_today' => 0,
              'has_pc' => $faker->boolean(25),
              'created_at' => $faker->dateTimeThisMonth($max = 'now')
            ]);
