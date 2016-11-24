@@ -21,6 +21,8 @@ class CreateRoomsTable extends Migration
             $table->integer('capacity');
             $table->string('color', 45);
             $table->string('type', 45);
+            $table->boolean('is_reserved');
+            $table->boolean('invalid');
             $table->boolean('has_pc');
             $table->timestamps();
         });

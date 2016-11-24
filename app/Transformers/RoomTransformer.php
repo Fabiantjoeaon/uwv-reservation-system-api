@@ -10,13 +10,16 @@ class RoomTransformer extends Transformer {
    */
   public function transform($room) {
     return [
+      'id' => $room['id'],
       'name' => $room['location'].'.'.$room['floor'].'.'.$room['number'],
       'floor' => $room['floor'],
       'number' => $room['number'],
       'capacity' => $room['capacity'],
       'color' => $room['color'],
       'type' => $room['type'],
-      'has_pc' => (boolean) $room['has_pc']
+      'invalid' => (boolean) $room['invalid'],
+      'has_pc' => (boolean) $room['has_pc'],
+      'is_reserved' => (boolean) $room['is_reserved'],
     ];
   }
 }

@@ -37,6 +37,13 @@ class ReservationsController extends ApiController
       ]);
     }
 
+    // 1. Get reservations by room
+    // 2. Fetch in front end from url?
+    // 3. Per day
+    public function getReservationsByDate($date) {
+      
+    }
+
     /**
      * Get reservations by userId
      * @param  integer $userId of the user resource

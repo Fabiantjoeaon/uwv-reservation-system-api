@@ -77,6 +77,11 @@ class RoomsTableSeeder extends Seeder
       return $rooms[$number];
     }
 
+    private function returnRandomColor($number) {
+      $colors = ['Paars', 'Groen', 'Oranje'];
+      return $colors[$number];
+    }
+
     /**
      * Run the database seeds.
      *
@@ -92,8 +97,10 @@ class RoomsTableSeeder extends Seeder
              'floor' => rand(0,1),
              'number' => rand(1,50),
              'capacity' => rand(1, 5),
-             'color' => $faker->colorName,
+             'color' => $this->returnRandomColor(rand(0, 2)),
              'type' => $this->returnRandomRoomType(rand(0,1)),
+             'invalid' => $faker->boolean(25),
+             'is_reserved' => 0,
              'has_pc' => $faker->boolean(25),
              'created_at' => $faker->dateTimeThisMonth($max = 'now')
            ]);
@@ -146,9 +153,13 @@ class ReservationsTableSeeder extends Seeder
          $customers = Customer::pluck('id')->all();
 
          foreach(range(0,10) as $index) {
+           $startDateTime = date('Y-m-d H:i:s', strtotime( '+'.mt_rand(0,3).' days'));
+           $lengthMinutes = rand(1,180);
+           $endDateTime = date('Y-m-d H:i:s', strtotime('+'.$lengthMinutes.' minutes', strtotime($startDateTime)));
            DB::table('reservations')->insert([
-             'date_time' => $faker->dateTimeThisMonth($max = 'now'),
-             'length_minutes' => rand(1,180),
+             'start_date_time' => $startDateTime,
+             'length_minutes' => $lengthMinutes,
+             'end_date_time' => $endDateTime,
              'activity' => $faker->sentence($nbWords = 3, $variableNbWords = true),
              'status' => $this->returnRandomStatusType(rand(0,1)),
              'number_persons' => rand(1,7),
