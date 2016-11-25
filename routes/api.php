@@ -16,7 +16,6 @@ use Tymon\JWTAuth\Middleware\GetUserFromToken;
 Route::get('/', function() {
   return view('welcome');
 });
-
 /* API Version 1 */
 Route::group(['prefix' => 'v1', 'middleware' => ['cors', 'https']], function() {
 

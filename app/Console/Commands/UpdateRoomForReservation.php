@@ -3,11 +3,13 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Redis;
 use App\Reservation;
 use App\Room;
 
 class UpdateRoomForReservation extends Command
 {
+
     /**
      * The name and signature of the console command.
      *
@@ -60,6 +62,17 @@ class UpdateRoomForReservation extends Command
       return ($now_ts > $end_ts);
     }
 
+    private function sendClientRenderEvent(Room $room) {
+        $data = [
+          'event' => 'roomHasUpdated',
+          'data' => [
+            'id' => $room->id
+          ]
+        ];
+
+        Redis::publish('room-channel', json_encode($data));
+    }
+
     /**
      * Execute the console command.
      *
@@ -69,6 +82,8 @@ class UpdateRoomForReservation extends Command
     {
       $reservations = Reservation::all();
       $now = date("Y-m-d H:i:s");
+      error_log(" ");
+      error_log("This update was at {$now}");
 
       foreach($reservations as $reservation) {
         $room = Reservation::find($reservation->id)->room();
@@ -84,7 +99,8 @@ class UpdateRoomForReservation extends Command
             $room->is_reserved_now = true;
             $room->save();
 
-            //TODO: Re-render client
+            // Re render client
+            $this->sendClientRenderEvent($room);
           }
         }
 
@@ -93,14 +109,10 @@ class UpdateRoomForReservation extends Command
           error_log("${res} has passed");
           $room->is_reserved_now = false;
           $room->save();
-          // Flag reservation to passed, delete with other cron job
-          $reservation->delete();
-        }
 
-        // Reservation is in the future
-        else {
-          //TODO: Set DB record if reservation is this day
-          error_log("${res} has yet to come");
+          // Delete old reservations with other cron job
+          $reservation->has_passed = true;
+          $reservation->save();
         }
       }
     }

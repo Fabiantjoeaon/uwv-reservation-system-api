@@ -27,7 +27,7 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('dorsia:updaterooms')
                  ->everyMinute()
-                 ->appendOutputTo(storage_path('logs/room_output.log'));    
+                 ->appendOutputTo(storage_path('logs/room_output.log'));
     }
 
     /**

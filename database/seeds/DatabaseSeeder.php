@@ -101,7 +101,6 @@ class RoomsTableSeeder extends Seeder
              'type' => $this->returnRandomRoomType(rand(0,1)),
              'invalid' => $faker->boolean(25),
              'is_reserved_now' => 0,
-            //  'is_reserved_today' => 0,
              'has_pc' => $faker->boolean(25),
              'created_at' => $faker->dateTimeThisMonth($max = 'now')
            ]);
@@ -164,6 +163,7 @@ class ReservationsTableSeeder extends Seeder
              'activity' => $faker->sentence($nbWords = 3, $variableNbWords = true),
              'status' => $this->returnRandomStatusType(rand(0,1)),
              'number_persons' => rand(1,7),
+             'has_passed' => 0,
              'room_id' => $faker->randomElement($rooms),
              'user_id' => $faker->randomElement($users),
              'customer_id' => $faker->randomElement($customers),

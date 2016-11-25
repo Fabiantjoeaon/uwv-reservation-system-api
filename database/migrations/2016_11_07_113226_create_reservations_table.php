@@ -21,6 +21,7 @@ class CreateReservationsTable extends Migration
           $table->string('activity', 75);
           $table->string('status', 45);
           $table->integer('number_persons');
+          $table->boolean('has_passed');
           $table->integer('room_id')->unsigned();
           $table->foreign('room_id')->references('id')->on('rooms')->onDelete('cascade');
           $table->integer('user_id')->unsigned();
