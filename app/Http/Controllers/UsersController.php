@@ -8,9 +8,29 @@ use App\User;
 
 class UsersController extends ApiController
 {
-    //https://github.com/tymondesigns/jwt-auth/wiki/Authentication
+    /**
+     * [getAuthenticatedUser description]
+     * @return [type] [description]
+     */
     public function getAuthenticatedUser() {
       $user = User::findOrFail(Auth::id());
+
+      return $this->respond([
+        'data' => $user
+      ]);
+    }
+
+    /**
+     * [getUserByReservation description]
+     * @param  [type] $reservationId [description]
+     * @return [type]                [description]
+     */
+    public function getUserByReservation($reservationId) {
+      $user = Reservation::findOrFail($reservationId)->user();
+
+      if(!count($user)) {
+        return $this->respondNotFound('There is no user for this reservation!');
+      }
 
       return $this->respond([
         'data' => $user

@@ -26,7 +26,7 @@ class RoomsController extends ApiController
      */
     public function index()
     {
-        $rooms = Room::all();
+        $rooms = Room::orderBy('floor')->get();
 
         return $this->respond([
           'data' => $this->roomTransformer->transformCollection($rooms->toArray())

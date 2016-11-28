@@ -145,10 +145,6 @@ class CustomersTableSeeder extends Seeder
 
 class ReservationsTableSeeder extends Seeder
 {
-    private function returnRandomStatusType($number) {
-      $status = ['Aanvaard', 'Bezig'];
-      return $status[$number];
-    }
     /**
      * Run the database seeds.
      *
@@ -170,7 +166,7 @@ class ReservationsTableSeeder extends Seeder
              'length_minutes' => $lengthMinutes,
              'end_date_time' => $endDateTime,
              'activity' => $faker->sentence($nbWords = 3, $variableNbWords = true),
-             'status' => $this->returnRandomStatusType(rand(0,1)),
+             'is_active_now' => 0,
              'number_persons' => rand(1,7),
              'has_passed' => 0,
              'room_id' => $faker->randomElement($rooms),

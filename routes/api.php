@@ -17,7 +17,7 @@ Route::get('/', function() {
   return view('welcome');
 });
 /* API Version 1 */
-Route::group(['prefix' => 'v1', 'middleware' => ['cors', 'https']], function() {
+Route::group(['prefix' => 'v1', 'middleware' => ['cors', 'https', 'throttle:60']], function() {
 
   Route::get('/test', function () {
     $token = JWTAuth::parseToken();
@@ -37,7 +37,9 @@ Route::group(['prefix' => 'v1', 'middleware' => ['cors', 'https']], function() {
     Route::resource('reservations', 'ReservationsController');
     Route::resource('customers', 'CustomersController');
 
+    Route::get('reservations/{id}/user', 'UsersController@getUserByReservation');
     Route::get('rooms/{id}/reservations', 'ReservationsController@getReservationsByRoom');
+    Route::get('rooms/{id}/active-reservation', 'ReservationsController@getReservedRoomData');
     Route::get('users/{id}/reservations', 'ReservationsController@getReservationsByUser');
     Route::get('users/{id}/customers', 'CustomersController@getCustomersByUser');
     Route::get('reservations/{id}/customer', 'CustomersController@getCustomerByReservation');

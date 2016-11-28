@@ -8,7 +8,7 @@ use App\Room;
 use App\User;
 use App\Transformers\ReservationTransformer;
 use Illuminate\Support\Facades\Auth;
-
+use DB;
 class ReservationsController extends ApiController
 {
     /**
@@ -18,6 +18,22 @@ class ReservationsController extends ApiController
 
     function __construct(reservationTransformer $reservationTransformer) {
       $this->reservationTransformer = $reservationTransformer;
+    }
+
+    public function getReservedRoomData($roomId) {
+      $reservation = DB::table('reservations')
+        ->where('is_active_now', '=', 1)
+        ->where('room_id', '=', $roomId)
+        ->get();
+        
+      if(!$reservation) {
+        return $this->respondNotFound('There is no active reservation for this room!');
+      }
+
+      //Using transformer doesnt work on stdClass instance ? (Which DB::table and statement returns)
+      return $this->respond([
+        'data' => $reservation
+      ]);
     }
 
     /**
@@ -41,7 +57,7 @@ class ReservationsController extends ApiController
     // 2. Fetch in front end from url?
     // 3. Per day
     public function getReservationsByDate($date) {
-      
+
     }
 
     /**

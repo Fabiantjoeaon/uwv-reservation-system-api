@@ -87,33 +87,41 @@ class UpdateRoomForReservation extends Command
 
       foreach($reservations as $reservation) {
         $room = Reservation::find($reservation->id)->room();
-        $res = $reservation->activity;
-        $rom = $room->location;
+        $reservationActivity = $reservation->activity;
+        $roomLocation = $room->location;
 
         // Check if reservation is now
         if($this->checkIfDateIsInRange($reservation->start_date_time, $reservation->end_date_time, $now)) {
-          error_log("${res} is now at ${rom}");
+          error_log("${reservationActivity} is now at ${roomLocation}");
           if($room->is_reserved_now) {
             continue;
           } else {
             $room->is_reserved_now = true;
+            $reservation->is_active_now = true;
+            $reservation->save();
             $room->save();
-
-            // Re render client
+            
             $this->sendClientRenderEvent($room);
           }
         }
 
         // Reservation has already passed...
         elseif ($this->checkIfDateHasPassed($reservation->end_date_time, $now)) {
-          error_log("${res} has passed");
-          $room->is_reserved_now = false;
-          $room->save();
+          if($reservation->has_passed) {
+            continue;
+          } else {
+            error_log("${reservationActivity} has passed");
+            $room->is_reserved_now = false;
+            $room->save();
+            $this->sendClientRenderEvent($room);
 
-          // Delete old reservations with other cron job
-          // TODO: Maybe desktop notification on passed activity??
-          $reservation->has_passed = true;
-          $reservation->save();
+            // Delete old reservations with other cron job
+            // TODO: Maybe desktop notification on passed activity??
+            $reservation->has_passed = true;
+            $reservation->is_active_now = false;
+            $reservation->save();
+          }
+
         }
       }
     }
