@@ -66,6 +66,15 @@ class UsersTableSeeder extends Seeder
             'password' => bcrypt('secret'),
             'created_at' => $faker->dateTimeThisMonth($max = 'now')
           ]);
+
+          if($index == 20) {
+            DB::table('users')->insert([
+              'name' => 'Test',
+              'email' => 'test@test.com',
+              'password' => bcrypt('test'),
+              'created_at' => $faker->dateTimeThisMonth($max = 'now')
+            ]);
+          }
         }
     }
 }

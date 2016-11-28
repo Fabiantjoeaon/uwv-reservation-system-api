@@ -111,6 +111,7 @@ class UpdateRoomForReservation extends Command
           $room->save();
 
           // Delete old reservations with other cron job
+          // TODO: Maybe desktop notification on passed activity??
           $reservation->has_passed = true;
           $reservation->save();
         }
