@@ -16,6 +16,7 @@ use Tymon\JWTAuth\Middleware\GetUserFromToken;
 Route::get('/', function() {
   return view('welcome');
 });
+
 /* API Version 1 */
 Route::group(['prefix' => 'v1', 'middleware' => ['cors', 'https', 'throttle:60']], function() {
 
@@ -38,6 +39,7 @@ Route::group(['prefix' => 'v1', 'middleware' => ['cors', 'https', 'throttle:60']
     Route::resource('customers', 'CustomersController');
 
     Route::get('reservations/{id}/user', 'UsersController@getUserByReservation');
+    Route::get('reservations/date/{date}', 'ReservationsController@getReservationsByDate');
     Route::get('rooms/{id}/reservations', 'ReservationsController@getReservationsByRoom');
     Route::get('rooms/{id}/active-reservation', 'ReservationsController@getReservedRoomData');
     Route::get('users/{id}/reservations', 'ReservationsController@getReservationsByUser');

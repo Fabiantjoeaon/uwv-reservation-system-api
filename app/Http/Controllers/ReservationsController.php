@@ -9,6 +9,7 @@ use App\User;
 use App\Transformers\ReservationTransformer;
 use Illuminate\Support\Facades\Auth;
 use DB;
+
 class ReservationsController extends ApiController
 {
     /**
@@ -20,12 +21,17 @@ class ReservationsController extends ApiController
       $this->reservationTransformer = $reservationTransformer;
     }
 
+    /**
+     * [getReservedRoomData description]
+     * @param  [type] $roomId [description]
+     * @return [type]         [description]
+     */
     public function getReservedRoomData($roomId) {
       $reservation = DB::table('reservations')
         ->where('is_active_now', '=', 1)
         ->where('room_id', '=', $roomId)
         ->get();
-        
+
       if(!$reservation) {
         return $this->respondNotFound('There is no active reservation for this room!');
       }
@@ -53,11 +59,21 @@ class ReservationsController extends ApiController
       ]);
     }
 
-    // 1. Get reservations by room
-    // 2. Fetch in front end from url?
-    // 3. Per day
+    /**
+     * [getReservationsByDate description]
+     * @param  [type] $date [description]
+     * @return [type]       [description]
+     */
     public function getReservationsByDate($date) {
+       $reservations = Reservation::where('start_date_time', 'LIKE', "%$date%")->get();
 
+       if(!count($reservations)) {
+         return $this->respondNotFound('There are no reservations for this date!');
+       }
+
+       return $this->respond([
+         'data' => $this->reservationTransformer->transformCollection($reservations->toArray())
+       ]);
     }
 
     /**
@@ -77,6 +93,10 @@ class ReservationsController extends ApiController
         ]);
     }
 
+    /**
+     * [getReservationsByAuthenticatedUser description]
+     * @return [type] [description]
+     */
     public function getReservationsByAuthenticatedUser() {
       $userId = Auth::id();
       $reservations = User::findOrFail($userId)->reservations();
@@ -102,16 +122,6 @@ class ReservationsController extends ApiController
         return $this->respond([
           'data' => $this->reservationTransformer->transformCollection($reservations->toArray())
         ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -141,17 +151,6 @@ class ReservationsController extends ApiController
         return $this->respond([
           'data' => $this->reservationTransformer->transform($reservation)
         ]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
     }
 
     /**

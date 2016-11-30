@@ -35,11 +35,11 @@ class UpdateRoomForReservation extends Command
     }
 
     /**
-     * [checkIfDateIsInRange description]
-     * @param  [type] $start_date [description]
-     * @param  [type] $end_date   [description]
-     * @param  [type] $now        [description]
-     * @return [type]             [description]
+     * Check if reservation is currently active
+     * @param  [Date] $start_date Beginning of reservation
+     * @param  [Date] $end_date   Ending of reservation
+     * @param  [Date] $now        Date now
+     * @return [boolean]
      */
     private function checkIfDateIsInRange($start_date, $end_date, $now) {
       $start_ts = strtotime($start_date);
@@ -50,10 +50,10 @@ class UpdateRoomForReservation extends Command
     }
 
     /**
-     * [checkIfDateHasPassed description]
-     * @param  [type] $end_date [description]
-     * @param  [type] $now      [description]
-     * @return [type]           [description]
+     * Check if the date of the reservation has passed
+     * @param  [Date] $end_date End date of reservation
+     * @param  [Date] $now      Date now
+     * @return [boolean]
      */
     private function checkIfDateHasPassed($end_date, $now) {
       $end_ts = strtotime($end_date);
@@ -62,6 +62,11 @@ class UpdateRoomForReservation extends Command
       return ($now_ts > $end_ts);
     }
 
+    /**
+     * Send event to client so that it can re-render
+     * @param  [Room]   $room Room that has been updated
+     * @return [void]
+     */
     private function sendClientRenderEvent(Room $room) {
         $data = [
           'event' => 'roomHasUpdated',
@@ -100,7 +105,7 @@ class UpdateRoomForReservation extends Command
             $reservation->is_active_now = true;
             $reservation->save();
             $room->save();
-            
+
             $this->sendClientRenderEvent($room);
           }
         }
