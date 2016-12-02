@@ -15,7 +15,8 @@ class ReservationTransformer extends Transformer {
       'end_date_time' => $reservation['end_date_time'],
       'activity' => $reservation['activity'],
       'is_active_now' => $reservation['is_active_now'],
-      'number_persons' => $reservation['number_persons']
+      'number_persons' => $reservation['number_persons'],
+      'room_id' => $reservation['room_id']
     ];
   }
 }

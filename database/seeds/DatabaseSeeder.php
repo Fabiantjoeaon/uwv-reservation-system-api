@@ -157,7 +157,7 @@ class ReservationsTableSeeder extends Seeder
          $users = User::pluck('id')->all();
          $customers = Customer::pluck('id')->all();
 
-         foreach(range(0,10) as $index) {
+         foreach(range(0,15) as $index) {
            $startDateTime = date('Y-m-d H:i:s', strtotime( '+'.mt_rand(0,3).' days'));
            $lengthMinutes = rand(1,180);
            $endDateTime = date('Y-m-d H:i:s', strtotime('+'.$lengthMinutes.' minutes', strtotime($startDateTime)));

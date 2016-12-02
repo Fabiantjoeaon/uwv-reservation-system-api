@@ -58,11 +58,24 @@ class ApiController extends Controller {
    * @return Error
    */
   public function respondNotFound($message = 'Resource not found!') {
-    return $this->setStatusCode(404)->respondWithError($message);
+    return $this->setStatusCode(404)->respond([
+      'data' => $message
+    ]);
   }
 
+  /**
+   * [respondUnauthorized description]
+   * @param  string $message [description]
+   * @return [type]          [description]
+   */
   public function respondUnauthorized($message = 'Invalid credentials!') {
     return $this->setStatusCode(401)->respondWithError($message);
+  }
+
+  public function respondTooManyRequests($message = 'Too many requests!') {
+    return $this->setStatusCode(429)->respond([
+      'data' => $message
+    ]);
   }
 
   /**

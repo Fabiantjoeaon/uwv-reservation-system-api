@@ -18,7 +18,8 @@ Route::get('/', function() {
 });
 
 /* API Version 1 */
-Route::group(['prefix' => 'v1', 'middleware' => ['cors', 'https', 'throttle:60']], function() {
+// TODO: LIMIT MIDDLEWARE: http://nathanmac.com/2015/09/12/simple-api-rate-limit-laravel-middleware/
+Route::group(['prefix' => 'v1', 'middleware' => ['cors', 'https', 'rate-limit']], function() {
 
   Route::get('/test', function () {
     $token = JWTAuth::parseToken();

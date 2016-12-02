@@ -55,6 +55,7 @@ class Kernel extends HttpKernel
         'https' => \App\Http\Middleware\ForceHTTPS::class,
         'jwt.auth' => \Tymon\JWTAuth\Middleware\GetUserFromToken::class,
         'jwt.refresh' => \Tymon\JWTAuth\Middleware\RefreshToken::class,
-        'jwt-auth' => \App\Http\Middleware\authJWT::class
+        'jwt-auth' => \App\Http\Middleware\authJWT::class,
+        'rate-limit' => \App\Http\Middleware\RateLimiter::class,
     ];
 }
