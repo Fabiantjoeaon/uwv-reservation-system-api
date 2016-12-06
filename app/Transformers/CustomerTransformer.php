@@ -10,9 +10,11 @@ class CustomerTransformer extends Transformer {
    */
   public function transform($customer) {
     return [
+      'id' => $customer['id'],
       'BSN' => $customer['BSN'],
       'first_name' => $customer['first_name'],
-      'last_name' => $customer['last_name']
+      'last_name' => $customer['last_name'],
+      'email' => $customer['email']
     ];
   }
 }

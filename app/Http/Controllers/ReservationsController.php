@@ -77,6 +77,16 @@ class ReservationsController extends ApiController
     }
 
     /**
+     * [getReservationsByRoomByDate description]
+     * @param  [type] $roomId [description]
+     * @param  [type] $date   [description]
+     * @return [type]         [description]
+     */
+    // public function getReservationsByRoomByDate($roomId, $date) {
+        // 
+    // }
+
+    /**
      * Get reservations by userId
      * @param  integer $userId of the user resource
      * @return Object of App\User

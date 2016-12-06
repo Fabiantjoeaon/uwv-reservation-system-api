@@ -18,6 +18,7 @@ class CreateCustomersTable extends Migration
             $table->integer('BSN');
             $table->string('first_name', 45);
             $table->string('last_name', 45);
+            $table->string('email')->unique();
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();

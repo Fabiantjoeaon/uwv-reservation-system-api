@@ -134,6 +134,7 @@ class CustomersTableSeeder extends Seeder
               'BSN' => rand(1, 600),
               'first_name' => $faker->firstName,
               'last_name' => $faker->lastName,
+              'email' => $faker->email,
               'user_id' => $faker->randomElement($users),
               'created_at' => $faker->dateTimeThisMonth($max = 'now')
             ]);
