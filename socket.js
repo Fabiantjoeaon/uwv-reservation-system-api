@@ -19,6 +19,7 @@ const redis = new Redis();
 
 redis.subscribe('room-channel');
 redis.on('message', (channel, message) => {
+  //TODO: CHECK RES PASSED EVENT
   const jsonMessage = JSON.parse(message);
   console.log(`${channel}:${jsonMessage.event}, @ room ${jsonMessage.data.id}`);
   io.emit(`${channel}:${jsonMessage.event}`, jsonMessage.data);

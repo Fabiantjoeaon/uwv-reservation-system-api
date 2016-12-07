@@ -79,6 +79,24 @@ class UpdateRoomForReservation extends Command
     }
 
     /**
+     * [sendClientDesktopNotificationEvent description]
+     * @param  Reservation $reservation [description]
+     * @param  Room        $room        [description]
+     * @return [type]                   [description]
+     */
+    private function sendClientDesktopNotificationEvent(Reservation $reservation, Room $room) {
+        $data = [
+          'event' => 'roomIsFree',
+          'data' => [
+            'activity' => $reservation->activity,
+            'roomName' => $room->name
+          ]
+        ];
+
+        Redis::publish('room-channel', json_encode($data));
+    }
+
+    /**
      * Execute the console command.
      *
      * @return mixed
@@ -120,11 +138,9 @@ class UpdateRoomForReservation extends Command
             $room->save();
             $this->sendClientRenderEvent($room);
 
-            // Delete old reservations with other cron job
-            // TODO: Maybe desktop notification on passed activity??
-            $reservation->has_passed = true;
-            $reservation->is_active_now = false;
-            $reservation->save();
+            $this->sendClientDesktopNotificationEvent($reservation, $room);
+            error_log("${reservationActivity} deleted");
+            $reservation->delete();
           }
 
         }
