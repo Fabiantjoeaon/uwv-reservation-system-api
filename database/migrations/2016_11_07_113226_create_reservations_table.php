@@ -19,6 +19,7 @@ class CreateReservationsTable extends Migration
           $table->integer('length_minutes');
           $table->dateTimeTz('end_date_time');
           $table->string('activity', 75);
+          $table->string('description', 150);
           $table->boolean('is_active_now', 45);
           $table->integer('number_persons');
           $table->boolean('has_passed');

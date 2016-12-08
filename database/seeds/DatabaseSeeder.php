@@ -167,6 +167,7 @@ class ReservationsTableSeeder extends Seeder
              'length_minutes' => $lengthMinutes,
              'end_date_time' => $endDateTime,
              'activity' => $faker->sentence($nbWords = 3, $variableNbWords = true),
+             'description' => $faker->sentence($nbWords = 4, $variableNbWords = true),
              'is_active_now' => 0,
              'number_persons' => rand(1,7),
              'has_passed' => 0,
