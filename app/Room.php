@@ -2,9 +2,9 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+use App\ValidationModel;
 
-class Room extends Model
+class Room extends ValidationModel
 {
    /**
     *  Retrieve reservations for room

@@ -2,10 +2,19 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+use App\ValidationModel;
 
-class Reservation extends Model
+class Reservation extends ValidationModel
 {
+   /**
+    * Rules for validation
+    * @var array
+    */
+   protected $rules = [
+      'activity' => 'required|min:3',
+      'description' => 'required|min:5'
+   ];
+
    /**
     *  Retrieve user for reservation
     */

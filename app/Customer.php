@@ -2,9 +2,9 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+use App\ValidationModel;
 
-class Customer extends Model
+class Customer extends ValidationModel
 {
     /**
      * Retrieve user by customer

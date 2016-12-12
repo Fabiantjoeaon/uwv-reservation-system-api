@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Reservation;
 use App\Room;
 use App\User;
+use App\Customer;
 use App\Transformers\ReservationTransformer;
 use Illuminate\Support\Facades\Auth;
 use DB;
@@ -77,16 +78,6 @@ class ReservationsController extends ApiController
     }
 
     /**
-     * [getReservationsByRoomByDate description]
-     * @param  [type] $roomId [description]
-     * @param  [type] $date   [description]
-     * @return [type]         [description]
-     */
-    // public function getReservationsByRoomByDate($roomId, $date) {
-        // 
-    // }
-
-    /**
      * Get reservations by userId
      * @param  integer $userId of the user resource
      * @return Object of App\User
@@ -142,7 +133,27 @@ class ReservationsController extends ApiController
      */
     public function store(Request $request)
     {
-        //
+        $input = $request->all();
+        $reservation = new Reservation;
+
+        if($reservation->validate($input)) {
+          $userId = Auth::user()->id;
+          $reservation->start_date_time = $request->start_date_time;
+          $reservation->length_minutes = $request->length_minutes;
+          $reservation->end_date_time = $request->end_date_time;
+          $reservation->activity = $request->activity;
+          $reservation->description = $request->description;
+          $reservation->number_persons = $request->number_persons;
+          $reservation->room_id = $request->room_id;
+          $reservation->user_id = $userId;
+          $reservation->customer_id = $request->customer_id;
+          $reservation->is_active_now = 0;
+          $reservation->has_passed = 0;
+          $reservation->save();
+        } else {
+          $errors = $reservation->errors();
+          return $this->respondInvalid($errors);
+        }
     }
 
     /**

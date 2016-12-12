@@ -72,8 +72,24 @@ class ApiController extends Controller {
     return $this->setStatusCode(401)->respondWithError($message);
   }
 
+  /**
+   * [respondTooManyRequests description]
+   * @param  string $message [description]
+   * @return [type]          [description]
+   */
   public function respondTooManyRequests($message = 'Too many requests!') {
     return $this->setStatusCode(429)->respond([
+      'data' => $message
+    ]);
+  }
+
+  /**
+   * [respondInvalid description]
+   * @param  string $message [description]
+   * @return [type]          [description]
+   */
+  public function respondInvalid($message = 'Invalid data!') {
+    return $this->setStatusCode(400)->respond([
       'data' => $message
     ]);
   }
