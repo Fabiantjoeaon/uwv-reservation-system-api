@@ -100,14 +100,20 @@ class ReservationsController extends ApiController
      */
     public function getReservationsByAuthenticatedUser() {
       $userId = Auth::id();
+      $data = [];
       $reservations = User::findOrFail($userId)->reservations();
 
       if(!count($reservations)) {
         return $this->respondNotFound('You have no reservations!');
       }
 
+      foreach($reservations as $reservation) {
+        $reservation->{"room"} = $reservation->room();
+        $reservation->{"customer"} = $reservation->customer();
+      }
+
       return $this->respond([
-        'data' => $this->reservationTransformer->transformCollection($reservations->toArray())
+        'data' => $reservations
       ]);
     }
 

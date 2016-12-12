@@ -35,7 +35,6 @@ Route::group(['prefix' => 'v1', 'middleware' => ['cors', 'https', 'rate-limit']]
     Route::get('reservations/{id}/user', 'UsersController@getUserByReservation');
     Route::get('reservations/date/{date}', 'ReservationsController@getReservationsByDate');
     Route::get('rooms/{id}/reservations', 'ReservationsController@getReservationsByRoom');
-    // Route::get('rooms/{id}/reservations/date/{date}', 'ReservationsController@getReservationsByRoomByDate');
     Route::get('rooms/{id}/active-reservation', 'ReservationsController@getReservedRoomData');
     Route::get('users/{id}/reservations', 'ReservationsController@getReservationsByUser');
     Route::get('users/{id}/customers', 'CustomersController@getCustomersByUser');
