@@ -103,7 +103,25 @@ class CustomersController extends ApiController
      */
     public function store(Request $request)
     {
-        //
+      $input = $request->all();
+      $customer = new Customer;
+
+      if($customer->validate($input)) {
+        $userId = Auth::user()->id;
+        $customer->first_name = $request->first_name;
+        $customer->last_name = $request->last_name;
+        $customer->email = $request->email;
+        $customer->BSN = $request->bsn;
+        $customer->user_id = $userId;
+        $customer->save();
+
+        return $this->respond([
+          'customer_id' => $customer->id
+        ]);
+      } else {
+        $errors = $customer->errors();
+        return $this->respondInvalid($errors);
+      }
     }
 
     /**
