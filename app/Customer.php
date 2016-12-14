@@ -13,7 +13,7 @@ class Customer extends ValidationModel
     protected $rules = [
        'first_name' => 'required|min:2',
        'last_name' => 'required|min:2',
-       'email' => 'unique|required|min:2',
+       'email' => 'required|min:2',
        'BSN' => 'required|min:6'
     ];
 

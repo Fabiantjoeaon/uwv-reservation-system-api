@@ -111,7 +111,7 @@ class CustomersController extends ApiController
         $customer->first_name = $request->first_name;
         $customer->last_name = $request->last_name;
         $customer->email = $request->email;
-        $customer->BSN = $request->bsn;
+        $customer->BSN = $request->BSN;
         $customer->user_id = $userId;
         $customer->save();
 

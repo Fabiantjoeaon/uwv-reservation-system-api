@@ -200,6 +200,7 @@ class ReservationsController extends ApiController
      */
     public function destroy($id)
     {
-        //
+       $reservation = Reservation::findOrFail($id);
+       $reservation->delete();
     }
 }
