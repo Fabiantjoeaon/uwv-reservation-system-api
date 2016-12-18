@@ -102,6 +102,7 @@ class ReservationsController extends ApiController
       $userId = Auth::id();
       $data = [];
       $reservations = User::findOrFail($userId)->reservations();
+      $reservations = $reservations->sortBy('created_at');
 
       if(!count($reservations)) {
         return $this->respondNotFound('You have no reservations!');
@@ -156,6 +157,11 @@ class ReservationsController extends ApiController
           $reservation->is_active_now = 0;
           $reservation->has_passed = 0;
           $reservation->save();
+
+          return $this->respond([
+            'id' => $reservation->id
+          ]);
+
         } else {
           $errors = $reservation->errors();
           return $this->respondInvalid($errors);
@@ -170,13 +176,15 @@ class ReservationsController extends ApiController
      */
     public function show($id)
     {
-        $reservation = Reservation::find($id);
+        $reservation = Reservation::findOrFail($id);
         if(!$reservation) {
           return $this->respondNotFound('Reservation does not exist!');
         }
 
+        $reservation->{"customer"} = $reservation->customer();
+
         return $this->respond([
-          'data' => $this->reservationTransformer->transform($reservation)
+          'data' => $reservation
         ]);
     }
 
@@ -189,7 +197,36 @@ class ReservationsController extends ApiController
      */
     public function update(Request $request, $id)
     {
-        //
+        $input = $request->all();
+        $reservation = Reservation::findOrFail($id);
+
+        if(!$reservation) {
+          return $this->respondNotFound('Reservation does not exist!');
+        }
+
+        if($reservation->validate($input)) {
+          $userId = Auth::user()->id;
+          $reservation->start_date_time = $request->start_date_time;
+          $reservation->length_minutes = $request->length_minutes;
+          $reservation->end_date_time = $request->end_date_time;
+          $reservation->activity = $request->activity;
+          $reservation->description = $request->description;
+          $reservation->number_persons = $request->number_persons;
+          $reservation->room_id = $request->room_id;
+          $reservation->user_id = $userId;
+          $reservation->customer_id = $request->customer_id;
+          $reservation->is_active_now = 0;
+          $reservation->has_passed = 0;
+          $reservation->save();
+
+          return $this->respond([
+            'id' => $reservation->id
+          ]);
+
+        } else {
+          $errors = $reservation->errors();
+          return $this->respondInvalid($errors);
+        }
     }
 
     /**
@@ -201,6 +238,11 @@ class ReservationsController extends ApiController
     public function destroy($id)
     {
        $reservation = Reservation::findOrFail($id);
+       $reservationActivity = $reservation->activity;
        $reservation->delete();
+
+       return $this->respond([
+         'activity' => $reservationActivity
+       ]);
     }
 }
