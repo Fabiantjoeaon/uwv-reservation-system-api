@@ -15,6 +15,7 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         'App\Console\Commands\Inspire',
         'App\Console\Commands\UpdateRoomForReservation',
+        'App\Console\Commands\DeleteRoomLogs',
     ];
 
     /**
@@ -25,9 +26,12 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('dorsia:updaterooms')
+        $schedule->command('dorsia:update-rooms')
                  ->everyMinute()
                  ->appendOutputTo(storage_path('logs/room_output.log'));
+
+        $schedule->command('dorsia:delete-room-logs')
+                 ->weekly();
     }
 
     /**

@@ -15,7 +15,7 @@ class UpdateRoomForReservation extends Command
      *
      * @var string
      */
-    protected $signature = 'dorsia:updaterooms';
+    protected $signature = 'dorsia:update-rooms';
 
     /**
      * The console command description.
@@ -142,7 +142,6 @@ class UpdateRoomForReservation extends Command
             error_log("${reservationActivity} deleted");
             $reservation->delete();
           }
-
         }
       }
     }
