@@ -86,16 +86,6 @@ class CustomersController extends ApiController
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -139,7 +129,7 @@ class CustomersController extends ApiController
         }
 
         $this->respond([
-          'data' => $customer->customerTransformer->transform($customer)
+          'data' => $customers->customerTransformer->transform($customer)
         ]);
     }
 

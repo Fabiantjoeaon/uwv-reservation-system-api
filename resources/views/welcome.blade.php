@@ -69,22 +69,13 @@
     </head>
     <body>
         <div class="flex-center position-ref full-height">
-          <!-- <div class="top-right links"> -->
-            <!-- @if (Auth::check()) -->
-              <!-- <a href="{{ url('/home') }}">Dashboard</a> -->
-              <!-- <a href="{{ url('/logout') }}">Logout</a> -->
-            <!-- @else -->
-              <!-- <a href="{{ url('/login') }}">Login</a> -->
-              <!-- <a href="{{ url('/register') }}">Register</a> -->
-            <!-- @endif -->
-          <!-- </div> -->
-
             <div class="content">
                 <div class="title m-b-md">
                     Dorsia API
                 </div>
 
                 <div class="links">
+                    <a href="https://fabiantjoeaon.github.io/dorsia_documentation">Documentation</a>
                     <a href="https://github.com/Fabiantjoeaon">GitHub</a>
                 </div>
             </div>
